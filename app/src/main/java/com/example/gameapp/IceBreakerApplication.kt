@@ -1,0 +1,8 @@
+package com.example.gameapp
+
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+
+@HiltAndroidApp
+class IceBreakerApplication: Application()

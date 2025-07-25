@@ -1,0 +1,236 @@
+kotlin version: 2.0.21
+error message: org.jetbrains.kotlin.backend.common.BackendException: Backend Internal error: Exception during IR lowering
+File being compiled: E:/gameApp/app/src/main/java/com/example/gameapp/ui/CandleStick.kt
+The root cause java.lang.RuntimeException was thrown at: org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:47)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException(CodegenUtil.kt:253)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException$default(CodegenUtil.kt:236)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:65)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:52)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:38)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:27)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:14)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:62)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:371)
+	at org.jetbrains.kotlin.codegen.CodegenFactory.generateModule(CodegenFactory.kt:47)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateModuleInFrontendIRMode(JvmIrCodegenFactory.kt:433)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineKt.generateCodeFromIr(jvmCompilerPipeline.kt:246)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineKt.compileModulesUsingFrontendIrAndLightTree(jvmCompilerPipeline.kt:142)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:148)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:43)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:103)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:49)
+	at org.jetbrains.kotlin.cli.common.CLITool.exec(CLITool.kt:101)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:464)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:73)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:506)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:423)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileNonIncrementally(IncrementalCompilerRunner.kt:301)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:129)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:675)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:92)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1660)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN name:drawPriceLabels visibility:private modality:FINAL <> ($receiver:androidx.compose.ui.graphics.drawscope.DrawScope, chartArea:androidx.compose.ui.geometry.Rect, minPrice:kotlin.Float, maxPrice:kotlin.Float, config:com.example.gameapp.ui.ChartConfig) returnType:kotlin.Unit
+  $receiver: VALUE_PARAMETER name:<this> type:androidx.compose.ui.graphics.drawscope.DrawScope
+  VALUE_PARAMETER name:chartArea index:0 type:androidx.compose.ui.geometry.Rect
+  VALUE_PARAMETER name:minPrice index:1 type:kotlin.Float
+  VALUE_PARAMETER name:maxPrice index:2 type:kotlin.Float
+  VALUE_PARAMETER name:config index:3 type:com.example.gameapp.ui.ChartConfig
+  BLOCK_BODY
+    VAR name:gridLines type:kotlin.Int [val]
+      CONST Int type=kotlin.Int value=10
+    VAR name:priceStep type:kotlin.Float [val]
+      CALL 'public final fun div (other: kotlin.Int): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=DIV
+        $this: CALL 'public final fun minus (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=MINUS
+          $this: GET_VAR 'maxPrice: kotlin.Float declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+          other: GET_VAR 'minPrice: kotlin.Float declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+        other: GET_VAR 'val gridLines: kotlin.Int [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+    VAR name:textPaint type:androidx.compose.ui.graphics.Paint [val]
+      CALL 'public final fun apply <T> (block: @[ExtensionFunctionType] kotlin.Function1<T of kotlin.StandardKt.apply, kotlin.Unit>): T of kotlin.StandardKt.apply [inline] declared in kotlin.StandardKt' type=androidx.compose.ui.graphics.Paint origin=null
+        <T>: androidx.compose.ui.graphics.Paint
+        $receiver: CALL 'public final fun Paint (): androidx.compose.ui.graphics.Paint declared in androidx.compose.ui.graphics.AndroidPaint_androidKt' type=androidx.compose.ui.graphics.Paint origin=null
+        block: BLOCK type=@[ExtensionFunctionType] kotlin.Function1<androidx.compose.ui.graphics.Paint, kotlin.Unit> origin=LAMBDA
+          COMPOSITE type=kotlin.Unit origin=null
+          FUNCTION_REFERENCE 'private final fun drawPriceLabels$lambda$22 ($config: com.example.gameapp.ui.ChartConfig, $this_drawPriceLabels: androidx.compose.ui.graphics.drawscope.DrawScope): kotlin.Unit declared in com.example.gameapp.ui.CandleStickKt' type=@[ExtensionFunctionType] kotlin.Function1<androidx.compose.ui.graphics.Paint, kotlin.Unit> origin=INLINE_LAMBDA reflectionTarget=null
+            $config: GET_VAR 'config: com.example.gameapp.ui.ChartConfig declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=com.example.gameapp.ui.ChartConfig origin=null
+            $this_drawPriceLabels: GET_VAR '<this>: androidx.compose.ui.graphics.drawscope.DrawScope declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.graphics.drawscope.DrawScope origin=null
+    BLOCK type=kotlin.Unit origin=FOR_LOOP
+      COMPOSITE type=kotlin.Unit origin=null
+        VAR FOR_LOOP_VARIABLE name:i type:kotlin.Int [var]
+          CONST Int type=kotlin.Int value=0
+      WHEN type=kotlin.Unit origin=null
+        BRANCH
+          if: CALL 'public final fun lessOrEqual (arg0: kotlin.Int, arg1: kotlin.Int): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+            arg0: GET_VAR 'var i: kotlin.Int [var] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+            arg1: GET_VAR 'val gridLines: kotlin.Int [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+          then: DO_WHILE label=CandleStickKt$drawPriceLabels3 origin=DO_WHILE_COUNTER_LOOP
+            body: COMPOSITE type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
+              COMPOSITE type=kotlin.Unit origin=FOR_LOOP_NEXT
+              BLOCK type=kotlin.Unit origin=null
+                VAR name:price type:kotlin.Float [val]
+                  CALL 'public final fun plus (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=PLUS
+                    $this: GET_VAR 'minPrice: kotlin.Float declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+                    other: CALL 'public final fun times (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Int' type=kotlin.Float origin=MUL
+                      $this: GET_VAR 'var i: kotlin.Int [var] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                      other: GET_VAR 'val priceStep: kotlin.Float [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+                VAR name:y type:kotlin.Float [val]
+                  CALL 'public final fun minus (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=MINUS
+                    $this: CALL 'public final fun <get-bottom> (): kotlin.Float declared in androidx.compose.ui.geometry.Rect' type=kotlin.Float origin=GET_PROPERTY
+                      $this: GET_VAR 'chartArea: androidx.compose.ui.geometry.Rect declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.geometry.Rect origin=null
+                    other: CALL 'public final fun div (other: kotlin.Int): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=DIV
+                      $this: CALL 'public final fun times (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Int' type=kotlin.Float origin=MUL
+                        $this: GET_VAR 'var i: kotlin.Int [var] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                        other: CALL 'public final fun <get-height> (): kotlin.Float declared in androidx.compose.ui.geometry.Rect' type=kotlin.Float origin=GET_PROPERTY
+                          $this: GET_VAR 'chartArea: androidx.compose.ui.geometry.Rect declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.geometry.Rect origin=null
+                      other: GET_VAR 'val gridLines: kotlin.Int [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                CALL 'public open fun drawText (p0: @[EnhancedNullability] kotlin.String, p1: kotlin.Float, p2: kotlin.Float, p3: @[EnhancedNullability] android.graphics.Paint): kotlin.Unit declared in android.graphics.Canvas' type=kotlin.Unit origin=null
+                  $this: CALL 'public final fun <get-nativeCanvas> (): android.graphics.Canvas declared in androidx.compose.ui.graphics.AndroidCanvas_androidKt' type=android.graphics.Canvas origin=GET_PROPERTY
+                    $receiver: CALL 'public open fun <get-canvas> (): androidx.compose.ui.graphics.Canvas declared in androidx.compose.ui.graphics.drawscope.DrawContext' type=androidx.compose.ui.graphics.Canvas origin=GET_PROPERTY
+                      $this: CALL 'public abstract fun <get-drawContext> (): androidx.compose.ui.graphics.drawscope.DrawContext declared in androidx.compose.ui.graphics.drawscope.DrawScope' type=androidx.compose.ui.graphics.drawscope.DrawContext origin=GET_PROPERTY
+                        $this: GET_VAR '<this>: androidx.compose.ui.graphics.drawscope.DrawScope declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.graphics.drawscope.DrawScope origin=null
+                  p0: STRING_CONCATENATION type=kotlin.String
+                    CONST String type=kotlin.String value="$"
+                    CALL 'public final fun format (format: kotlin.String, vararg args: kotlin.Any?): kotlin.String [inline] declared in kotlin.text.StringsKt' type=kotlin.String origin=null
+                      $receiver: GET_FIELD 'FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:kotlin.String.Companion visibility:public [final,static] declared in kotlin.String.Companion' type=kotlin.String.Companion origin=null
+                      format: CONST String type=kotlin.String value="%.2f"
+                      args: BLOCK type=kotlin.Array<out kotlin.Any?> origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp0 type:kotlin.Array<out kotlin.Any?> [val]
+                          CALL 'public final fun arrayOfNulls <T> (size: kotlin.Int): kotlin.Array<T of kotlin.arrayOfNulls?> declared in kotlin' type=kotlin.Array<out kotlin.Any?> origin=null
+                            <T>: kotlin.Any?
+                            size: CONST Int type=kotlin.Int value=1
+                        CALL 'public final fun set (index: kotlin.Int, value: T of kotlin.Array): kotlin.Unit [operator] declared in kotlin.Array' type=kotlin.Unit origin=null
+                          $this: GET_VAR 'val tmp0: kotlin.Array<out kotlin.Any?> [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Array<out kotlin.Any?> origin=null
+                          index: CONST Int type=kotlin.Int value=0
+                          value: GET_VAR 'val price: kotlin.Float [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+                        GET_VAR 'val tmp0: kotlin.Array<out kotlin.Any?> [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Array<out kotlin.Any?> origin=null
+                  p1: CALL 'public final fun minus (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=MINUS
+                    $this: CALL 'public final fun <get-left> (): kotlin.Float declared in androidx.compose.ui.geometry.Rect' type=kotlin.Float origin=GET_PROPERTY
+                      $this: GET_VAR 'chartArea: androidx.compose.ui.geometry.Rect declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.geometry.Rect origin=null
+                    other: CONST Float type=kotlin.Float value=40.0
+                  p2: CALL 'public final fun plus (other: kotlin.Float): kotlin.Float [operator] declared in kotlin.Float' type=kotlin.Float origin=PLUS
+                    $this: GET_VAR 'val y: kotlin.Float [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Float origin=null
+                    other: CONST Float type=kotlin.Float value=5.0
+                  p3: BLOCK type=android.graphics.Paint origin=null
+                    CALL 'public final fun checkNotNull (object: kotlin.Any?, message: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+                      object: GET_VAR 'val textPaint: androidx.compose.ui.graphics.Paint [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.graphics.Paint origin=null
+                      message: CONST String type=kotlin.String value="null cannot be cast to non-null type android.graphics.Paint"
+                    TYPE_OP type=android.graphics.Paint? origin=CAST typeOperand=android.graphics.Paint?
+                      GET_VAR 'val textPaint: androidx.compose.ui.graphics.Paint [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=androidx.compose.ui.graphics.Paint origin=null
+            condition: COMPOSITE type=kotlin.Boolean origin=null
+              WHEN type=kotlin.Unit origin=null
+                BRANCH
+                  if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                    arg0: GET_VAR 'var i: kotlin.Int [var] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                    arg1: GET_VAR 'val gridLines: kotlin.Int [val] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                  then: BREAK label=null loop.label=CandleStickKt$drawPriceLabels3
+              CALL 'public final fun <int-prefix-incr-decr> (value: kotlin.Int, delta: kotlin.Int): kotlin.Int declared in kotlin.jvm.internal' type=kotlin.Int origin=null
+                value: GET_VAR 'var i: kotlin.Int [var] declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels' type=kotlin.Int origin=null
+                delta: CONST Int type=kotlin.Int value=1
+              CONST Boolean type=kotlin.Boolean value=true
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:47)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:40)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:406)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:423)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:168)
+	at org.jetbrains.kotlin.backend.jvm.FileCodegen.lower(JvmPhases.kt:39)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseFactoriesKt.createFilePhase$lambda$4(PhaseFactories.kt:71)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$createSimpleNamedCompilerPhase$1.phaseBody(PhaseBuilders.kt:69)
+	at org.jetbrains.kotlin.backend.common.phaser.SimpleNamedCompilerPhase.phaseBody(CompilerPhase.kt:226)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:62)
+	... 43 more
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN INLINE_LAMBDA name:drawPriceLabels$lambda$22 visibility:private modality:FINAL <> ($receiver:androidx.compose.ui.graphics.Paint, $config:com.example.gameapp.ui.ChartConfig, $this_drawPriceLabels:androidx.compose.ui.graphics.drawscope.DrawScope) returnType:kotlin.Unit
+  $receiver: VALUE_PARAMETER name:$this$apply type:androidx.compose.ui.graphics.Paint
+  VALUE_PARAMETER BOUND_VALUE_PARAMETER name:$config index:0 type:com.example.gameapp.ui.ChartConfig
+  VALUE_PARAMETER BOUND_VALUE_PARAMETER name:$this_drawPriceLabels index:1 type:androidx.compose.ui.graphics.drawscope.DrawScope
+  BLOCK_BODY
+    VAR name:$i$a$-apply-CandleStickKt$drawPriceLabels$textPaint$1 type:kotlin.Int [val]
+      CONST Int type=kotlin.Int value=0
+    CALL 'public abstract fun setColor-8_81llA (value: androidx.compose.ui.graphics.Color): kotlin.Unit declared in androidx.compose.ui.graphics.Paint' type=kotlin.Unit origin=EQ
+      $this: GET_VAR '$this$apply: androidx.compose.ui.graphics.Paint declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels$lambda$22' type=androidx.compose.ui.graphics.Paint origin=null
+      value: CALL 'public final fun copy-wmQWz5c$default (arg0: androidx.compose.ui.graphics.Color, alpha: kotlin.Float, red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float, $mask0: kotlin.Int, $handler: kotlin.Any?): androidx.compose.ui.graphics.Color declared in androidx.compose.ui.graphics.Color' type=androidx.compose.ui.graphics.Color origin=DEFAULT_DISPATCH_CALL
+        arg0: CALL 'public final fun getTextColor-0d7_KjU (): androidx.compose.ui.graphics.Color declared in com.example.gameapp.ui.ChartConfig' type=androidx.compose.ui.graphics.Color origin=GET_PROPERTY
+          $this: GET_VAR '$config: com.example.gameapp.ui.ChartConfig declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels$lambda$22' type=com.example.gameapp.ui.ChartConfig origin=null
+        alpha: COMPOSITE type=kotlin.Float origin=DEFAULT_VALUE
+          CONST Float type=kotlin.Float value=0.0
+        red: COMPOSITE type=kotlin.Float origin=DEFAULT_VALUE
+          CONST Float type=kotlin.Float value=0.0
+        green: COMPOSITE type=kotlin.Float origin=DEFAULT_VALUE
+          CONST Float type=kotlin.Float value=0.0
+        blue: COMPOSITE type=kotlin.Float origin=DEFAULT_VALUE
+          CONST Float type=kotlin.Float value=0.0
+        $mask0: CONST Int type=kotlin.Int value=15
+        $handler: CONST Null type=kotlin.Any? value=null
+    SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:textSize type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+      value: CALL 'public open fun toInt (): kotlin.Int declared in kotlin.Float' type=kotlin.Int origin=null
+        $this: CALL 'public open fun toPx--R2X_6o (): kotlin.Float [fake_override] declared in androidx.compose.ui.graphics.drawscope.DrawScope' type=kotlin.Float origin=null
+          $this: GET_VAR '$this_drawPriceLabels: androidx.compose.ui.graphics.drawscope.DrawScope declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels$lambda$22' type=androidx.compose.ui.graphics.drawscope.DrawScope origin=null
+          $receiver: CALL 'public final fun <get-sp> (): androidx.compose.ui.unit.TextUnit declared in androidx.compose.ui.unit.TextUnitKt' type=androidx.compose.ui.unit.TextUnit origin=GET_PROPERTY
+            $receiver: CONST Int type=kotlin.Int value=12
+    CALL 'public abstract fun <set-isAntiAlias> (value: kotlin.Boolean): kotlin.Unit declared in androidx.compose.ui.graphics.Paint' type=kotlin.Unit origin=EQ
+      $this: GET_VAR '$this$apply: androidx.compose.ui.graphics.Paint declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels$lambda$22' type=androidx.compose.ui.graphics.Paint origin=null
+      value: CONST Boolean type=kotlin.Boolean value=true
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:47)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrSourceCompilerForInline.generateLambdaBody(IrSourceCompilerForInline.kt:67)
+	at org.jetbrains.kotlin.codegen.inline.ExpressionLambda.generateLambdaBody(LambdaInfo.kt:72)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genValueAndPut(IrInlineCodegen.kt:100)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall$handleParameter(ExpressionCodegen.kt:616)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:644)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:24)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitVariable(ExpressionCodegen.kt:790)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitVariable(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.declarations.IrVariable.accept(IrVariable.kt:36)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:579)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:584)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:240)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:123)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:44)
+	... 53 more
+Caused by: java.lang.AssertionError: access of const val: SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:textSize type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+  value: CALL 'public open fun toInt (): kotlin.Int declared in kotlin.Float' type=kotlin.Int origin=null
+    $this: CALL 'public open fun toPx--R2X_6o (): kotlin.Float [fake_override] declared in androidx.compose.ui.graphics.drawscope.DrawScope' type=kotlin.Float origin=null
+      $this: GET_VAR '$this_drawPriceLabels: androidx.compose.ui.graphics.drawscope.DrawScope declared in com.example.gameapp.ui.CandleStickKt.drawPriceLabels$lambda$22' type=androidx.compose.ui.graphics.drawscope.DrawScope origin=null
+      $receiver: CALL 'public final fun <get-sp> (): androidx.compose.ui.unit.TextUnit declared in androidx.compose.ui.unit.TextUnitKt' type=androidx.compose.ui.unit.TextUnit origin=GET_PROPERTY
+        $receiver: CONST Int type=kotlin.Int value=12
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:861)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.visitors.IrElementVisitor$DefaultImpls.visitSetField(IrElementVisitor.kt:206)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:908)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrSetField.accept(IrSetField.kt:21)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:579)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:584)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:240)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:123)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:44)
+	... 70 more
+
+
