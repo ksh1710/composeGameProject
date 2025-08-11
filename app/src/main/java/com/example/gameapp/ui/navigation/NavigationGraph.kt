@@ -28,7 +28,6 @@ fun NavigationGraph(navController: NavHostController) {
                 navigateToAddPlayerScreen = {
                     navController.navigate(Destinations.TruthOrDareGameGraph.route)
                 },
-                navController = navController
             )
         }
 

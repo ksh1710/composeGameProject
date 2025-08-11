@@ -160,8 +160,7 @@ fun TruthOrDareGameScreen(
             shouldSpin = false
         }
     }
-    Scaffold(
-    ) { paddingVal ->
+    Scaffold { paddingVal ->
         LazyColumn(
             modifier = Modifier
                 .padding(paddingVal)
@@ -467,7 +466,7 @@ fun TruthOrDareGameScreen(
                     )
                 }
             }
-        // Bottle Selector Dialog
+            // Bottle Selector Dialog
             item {
                 if (showBottleSelector) {
                     Dialog(onDismissRequest = { showBottleSelector = false }) {
