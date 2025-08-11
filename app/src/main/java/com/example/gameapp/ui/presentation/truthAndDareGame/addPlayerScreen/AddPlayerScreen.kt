@@ -39,7 +39,8 @@ import kotlinx.coroutines.flow.collectLatest
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPlayerScreen(
-    navigateToGameModeSelectionScreen: (List<String>) -> Unit, // Pass players to the next screen
+    navigateToGameScreen: (List<String>) -> Unit, // Pass players to the next screen
+    initializeScores: (List<String>) -> Unit, // Pass players to the next screen
     viewModel: AddPlayerViewModel = hiltViewModel()
 ) {
     val players = viewModel.players // Observe the players list
@@ -61,21 +62,6 @@ fun AddPlayerScreen(
         topBar = {
             TopAppBar(title = { Text("Add Players") })
         },
-        bottomBar = {
-            Button(
-                onClick = {
-                    if (viewModel.canProceedToNextScreenAndNotify()) {
-                        navigateToGameModeSelectionScreen(players)
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Text("Proceed to Game Mode")
-            }
-        },
-
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -123,6 +109,19 @@ fun AddPlayerScreen(
                         )
                     }
                 }
+            }
+            Button(
+                onClick = {
+                    if (viewModel.canProceedToNextScreenAndNotify()) {
+                        navigateToGameScreen(players)
+                        initializeScores(players) // Initialize scores with the players list
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            ) {
+                Text("Proceed to Game Mode")
             }
         }
     }

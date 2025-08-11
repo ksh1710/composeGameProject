@@ -1,27 +1,12 @@
 package com.example.gameapp.viewmodel
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.gameapp.data.model.Player
-import com.example.gameapp.data.values.dares
-import com.example.gameapp.data.values.truths
 import com.example.gameapp.utils.GameMode
-import com.example.gameapp.utils.determinePlayersFromRotation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 @HiltViewModel
@@ -40,6 +25,24 @@ class SharedTruthOrDareViewModel @Inject constructor() : ViewModel() {
 
     private val _currentPlayerIndex = MutableStateFlow(0)
     val currentPlayerIndex: StateFlow<Int> = _currentPlayerIndex.asStateFlow()
+
+    private val _playerScores = MutableStateFlow<Map<String, Int>>(emptyMap())
+    val playerScores: StateFlow<Map<String, Int>> = _playerScores
+
+    fun initializeScores(players: List<String>) {
+        _playerScores.value = players.associateWith { 0 }
+    }
+
+    fun addPoints(player: String, points: Int) {
+        _playerScores.value = _playerScores.value.toMutableMap().apply {
+            this[player] = (this[player] ?: 0) + points
+        }
+    }
+
+    fun resetScores() {
+        _playerScores.value = _playerScores.value.mapValues { 0 }
+    }
+
 
     // Example data for truths and dares (you'd load this from resources, database, or network)
     private val friendsTruths = listOf(
@@ -74,6 +77,26 @@ class SharedTruthOrDareViewModel @Inject constructor() : ViewModel() {
         "Kiss someone on the neck for 10 seconds.",
         "Send a flirty text to someone."
     )
+
+    fun getListOfTruths(gameMode: GameMode): List<String> {
+        if (gameMode == GameMode.FRIENDS) {
+            return friendsTruths
+        } else if (gameMode == GameMode.COUPLE) {
+            return coupleTruths
+        } else {
+            return adultTruths
+        }
+    }
+
+    fun getListOfDares(gameMode: GameMode): List<String> {
+        if (gameMode == GameMode.FRIENDS) {
+            return friendsDares
+        } else if (gameMode == GameMode.COUPLE) {
+            return coupleDares
+        } else {
+            return adultDares
+        }
+    }
 
     fun setPlayers(playerList: List<String>) {
         _players.value = playerList

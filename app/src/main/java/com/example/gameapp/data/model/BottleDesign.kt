@@ -11,5 +11,5 @@ data class BottleDesign(
 )
 
 enum class BottleStyle {
-    CLASSIC, GLASS, MODERN, WINE, CLEAR, LUXURY
+    CLASSIC, GLASS, MODERN, WINE, CLEAR, LUXURY,CUSTOM_LUXURY
 }

@@ -13,7 +13,6 @@ fun NavigationGraph(navController: NavHostController) {
         navController = navController,
         startDestination = Destinations.SplashScreen.route
     ) {
-        truthOrDareGameGraph(navController)
 
         composable(Destinations.SplashScreen.route) {
             SplashScreen(navigateAhead = {
@@ -32,6 +31,9 @@ fun NavigationGraph(navController: NavHostController) {
                 navController = navController
             )
         }
+
+        truthOrDareGameGraph(navController)
+
         composable(Destinations.SettingsScreen.route) {
 //            SettingsScreen(
 //                navController = navController

@@ -26,7 +26,7 @@ import com.example.gameapp.viewmodel.TruthOrDareModeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TruthOrDareModeScreen(
-    navigateToGameScreen: (GameMode) -> Unit, // Pass selected mode
+    navigateToAddPlayerScreen: (GameMode) -> Unit, // Pass selected mode
     viewModel: TruthOrDareModeViewModel = hiltViewModel()
 ) {
     val selectedMode by viewModel.selectedMode.collectAsState()
@@ -35,17 +35,17 @@ fun TruthOrDareModeScreen(
         topBar = {
             TopAppBar(title = { Text("Select Game Mode") })
         },
-        bottomBar = {
-            Button(
-                onClick = { selectedMode?.let { navigateToGameScreen(it) } },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                enabled = selectedMode != null
-            ) {
-                Text("Start Game")
-            }
-        }
+//        bottomBar = {
+//            Button(
+//                onClick = { selectedMode?.let { navigateToAddPlayerScreen(it) } },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(16.dp),
+//                enabled = selectedMode != null
+//            ) {
+//                Text("Start Game")
+//            }
+//        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -63,7 +63,11 @@ fun TruthOrDareModeScreen(
                 ModeSelectionCard(
                     mode = mode,
                     isSelected = mode == selectedMode,
-                    onModeSelected = { viewModel.selectMode(it) }
+                    onModeSelected = { mode ->
+                        viewModel.selectMode(mode).let {
+                            navigateToAddPlayerScreen(mode)
+                        }
+                    }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -91,7 +95,6 @@ fun ModeSelectionCard(
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            // You can add more description here for each mode
             Text(
                 text = when (mode) {
                     GameMode.FRIENDS -> "Perfect for casual fun with friends."

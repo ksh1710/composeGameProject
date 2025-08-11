@@ -40,5 +40,12 @@ val bottleDesigns = listOf(
         primaryColor = Color(0xFFFFD700),
         secondaryColor = Color(0xFFB8860B),
         style = BottleStyle.LUXURY
+    ),
+    BottleDesign(
+        name = "Custom Luxury",
+        primaryColor = Color(0xFFFFD700),
+        secondaryColor = Color(0xFFB8860B),
+        style = BottleStyle.CUSTOM_LUXURY
     )
+
 )

@@ -14,7 +14,7 @@ import com.example.gameapp.viewmodel.SharedTruthOrDareViewModel
 
 fun NavGraphBuilder.truthOrDareGameGraph(navController: NavController) {
     navigation(
-        startDestination = Destinations.TruthOrDareAddPlayerScreen.route, // First screen in this flow
+        startDestination = Destinations.TruthOrDareModeScreen.route, // First screen in this flow
         route = Destinations.TruthOrDareGameGraph.route // Route for the entire nested graph
     ) {
 
@@ -25,10 +25,13 @@ fun NavGraphBuilder.truthOrDareGameGraph(navController: NavController) {
             val sharedViewModel: SharedTruthOrDareViewModel = hiltViewModel(parentEntry)
 
             AddPlayerScreen(
-                navigateToGameModeSelectionScreen = { players ->
+                navigateToGameScreen = { players ->
                     sharedViewModel.setPlayers(players)
-                    navController.navigate(Destinations.TruthOrDareModeScreen.route)
-                }
+                    navController.navigate(Destinations.TruthOrDareGameScreen.route)
+                },
+                initializeScores = { players ->
+                    sharedViewModel.initializeScores(players)
+                },
             )
         }
 
@@ -39,9 +42,9 @@ fun NavGraphBuilder.truthOrDareGameGraph(navController: NavController) {
             val sharedViewModel: SharedTruthOrDareViewModel = hiltViewModel(parentEntry)
 
             TruthOrDareModeScreen(
-                navigateToGameScreen = { mode ->
+                navigateToAddPlayerScreen = { mode ->
                     sharedViewModel.setSelectedMode(mode)
-                    navController.navigate(Destinations.TruthOrDareGameScreen.route)
+                    navController.navigate(Destinations.TruthOrDareAddPlayerScreen.route)
                 }
             )
 
@@ -53,7 +56,14 @@ fun NavGraphBuilder.truthOrDareGameGraph(navController: NavController) {
             val sharedViewModel: SharedTruthOrDareViewModel = hiltViewModel(parentEntry)
 
             TruthOrDareGameScreen(
-                viewmodel = sharedViewModel
+                viewmodel = sharedViewModel,
+                onGameEnd = {
+                    navController.navigate(Destinations.HomeScreen.route) {
+                        popUpTo(Destinations.TruthOrDareGameGraph.route) {
+                            inclusive = true // Clear the back stack
+                        }
+                    }
+                }
             )
         }
     }

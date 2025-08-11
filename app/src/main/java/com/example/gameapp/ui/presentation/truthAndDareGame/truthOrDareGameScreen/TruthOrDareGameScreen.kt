@@ -1,7 +1,13 @@
 package com.example.gameapp.ui.presentation.truthAndDareGame.truthOrDareGameScreen
 
+import android.media.MediaPlayer
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -18,6 +24,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,6 +36,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -41,6 +49,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,31 +65,54 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.gameapp.data.values.bottleDesigns
-import com.example.gameapp.data.values.dares
-import com.example.gameapp.data.values.truths
 import com.example.gameapp.ui.presentation.truthAndDareGame.truthOrDareGameScreen.components.BottleCanvas
-import com.example.gameapp.ui.presentation.truthAndDareGame.truthOrDareGameScreen.components.BottleDesign
+import com.example.gameapp.utils.GameMode
 import com.example.gameapp.utils.determinePlayersFromRotation
 import com.example.gameapp.utils.spinBottle
 import com.example.gameapp.viewmodel.SharedTruthOrDareViewModel
 import kotlinx.coroutines.launch
+import com.example.gameapp.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TruthOrDareGameScreen(
-    viewmodel: SharedTruthOrDareViewModel
+    viewmodel: SharedTruthOrDareViewModel,
+    onGameEnd: () -> Unit
 ) {
     val players by viewmodel.players.collectAsState()
+    val selectedMode by viewmodel.selectedMode.collectAsState()
     val askingPlayer = remember { mutableStateOf<String?>(null) }
     val answeringPlayer = remember { mutableStateOf<String?>(null) }
     val taskPrompt = remember { mutableStateOf<String?>(null) }
+    val truth = viewmodel.getListOfTruths(selectedMode ?: GameMode.FRIENDS).random()
+    val dare = viewmodel.getListOfDares(selectedMode ?: GameMode.FRIENDS).random()
+    val scores by viewmodel.playerScores.collectAsState()
+
+    var showWinnerDialog by remember { mutableStateOf(false) }
+    var winnerName by remember { mutableStateOf("") }
+
+
+    var selectedPoints by remember { mutableIntStateOf(0) }
+
+
+    val ctx = LocalContext.current
+    val mediaPlayer = remember {
+        MediaPlayer.create(ctx, R.raw.bottle_sound)
+    }
+    DisposableEffect(Unit) {
+        onDispose {
+            mediaPlayer.release()
+        }
+    }
 
     // Bottle selection state
     var selectedBottleIndex by remember { mutableIntStateOf(0) }
@@ -96,10 +128,12 @@ fun TruthOrDareGameScreen(
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
 
+
     // Animation effect - This is the core of the rotation system
     LaunchedEffect(shouldSpin) {
         if (shouldSpin) {
             spinning = true
+            mediaPlayer.start()
 
             // The animation interpolates from current rotation to target rotation
             // over 3 seconds with easing that mimics real physics
@@ -110,6 +144,10 @@ fun TruthOrDareGameScreen(
                     easing = FastOutSlowInEasing // Starts fast, slows down naturally
                 )
             )
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.stop()
+                mediaPlayer.prepare() // Prepare the player for the next spin
+            }
 
             // After animation completes, determine the players
             val (asking, answering) = determinePlayersFromRotation(
@@ -207,13 +245,14 @@ fun TruthOrDareGameScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     // Draw the selected bottle design
-//                    BottleCanvas(
-//                        design = bottleDesigns[selectedBottleIndex],
-//                        modifier = Modifier.size(120.dp)
-//                    )
-                    BottleDesign(
-                        modifier = Modifier.size(300.dp)
+                    BottleCanvas(
+                        design = bottleDesigns[selectedBottleIndex],
+                        modifier = Modifier.size(120.dp)
                     )
+
+//                    BottleDesign(
+//                        modifier = Modifier.size(300.dp)
+//                    )
                 }
 //    }\
                 Spacer(modifier = Modifier.height(16.dp))
@@ -260,7 +299,10 @@ fun TruthOrDareGameScreen(
                                 Row {
                                     // Truth button
                                     Button(
-                                        onClick = { taskPrompt.value = truths.random() },
+                                        onClick = {
+                                            taskPrompt.value = truth
+                                            selectedPoints = 1 // Truth worth 1 point
+                                        },
                                         modifier = Modifier
                                             .height(50.dp)
                                             .width(100.dp),
@@ -295,7 +337,11 @@ fun TruthOrDareGameScreen(
 
                                     // Dare button
                                     Button(
-                                        onClick = { taskPrompt.value = dares.random() },
+                                        onClick = {
+                                            taskPrompt.value = dare
+                                            selectedPoints = 2 // Dare worth 2 points
+
+                                        },
                                         modifier = Modifier
                                             .height(50.dp)
                                             .width(100.dp),
@@ -345,42 +391,83 @@ fun TruthOrDareGameScreen(
                                 }
 
                                 Spacer(modifier = Modifier.height(16.dp))
-
-                                Button(
-                                    onClick = {
-                                        askingPlayer.value = null
-                                        answeringPlayer.value = null
-                                        taskPrompt.value = null
-                                    }
-                                ) {
-                                    Text("Next Turn")
-                                }
                             }
                         }
                     }
                 }
             }
-            // Reset game button
-
             item {
+                if (taskPrompt.value != null) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = {
+                                answeringPlayer.let {
+                                    viewmodel.addPoints(it.value!!, selectedPoints)
+                                }
+                                taskPrompt.value = null // Clear for next turn
+                                askingPlayer.value = null
+                                answeringPlayer.value = null
 
-                Text(
-                    modifier = Modifier.clickable {
-                        coroutineScope.launch {
-                            askingPlayer.value = null
-                            answeringPlayer.value = null
-                            taskPrompt.value = null
-                            spinning = false
-                            shouldSpin = false
-                            bottleRotation.snapTo(0f)
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+                        ) {
+                            Text("Completed ✅")
                         }
-                    },
-                    text = "Reset Game"
-                )
+                        Button(
+                            onClick = {
+                                taskPrompt.value = null // No points awarded
+                                askingPlayer.value = null
+                                answeringPlayer.value = null
+
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336))
+                        ) {
+                            Text("Skipped ❌")
+                        }
+                    }
+                }
             }
 
+            item {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Scores", fontWeight = FontWeight.Bold)
+                    scores.forEach { (player, score) ->
+                        Text("$player: $score points")
+                    }
+                }
 
-// Bottle Selector Dialog
+            }
+            // Reset game button
+            item {
+                Row {
+                    Text(
+                        modifier = Modifier.clickable {
+
+                            val maxScore = scores.maxByOrNull { it.value }
+                            if (maxScore != null) {
+                                winnerName = maxScore.key
+                                showWinnerDialog = true
+                            }
+
+                            coroutineScope.launch {
+                                askingPlayer.value = null
+                                answeringPlayer.value = null
+                                taskPrompt.value = null
+                                spinning = false
+                                shouldSpin = false
+                                bottleRotation.snapTo(0f)
+                            }
+                        },
+                        text = "End Game",
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        // Bottle Selector Dialog
             item {
                 if (showBottleSelector) {
                     Dialog(onDismissRequest = { showBottleSelector = false }) {
@@ -469,6 +556,65 @@ fun TruthOrDareGameScreen(
                     }
                 }
             }
+        }
+        if (showWinnerDialog) {
+            AlertDialog(
+                properties = DialogProperties(
+                    dismissOnBackPress = false,
+                    dismissOnClickOutside = false
+                ),
+                onDismissRequest = { showWinnerDialog = false },
+                title = {
+                    Text(
+                        text = "🏆 Winner! 🏆",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                text = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        // Animated Emoji Celebration
+                        val infiniteTransition = rememberInfiniteTransition(label = "")
+                        val offset by infiniteTransition.animateFloat(
+                            initialValue = -10f,
+                            targetValue = 10f,
+                            animationSpec = infiniteRepeatable(
+                                animation = tween(500, easing = LinearEasing),
+                                repeatMode = RepeatMode.Reverse
+                            ),
+                            label = ""
+                        )
+
+                        Text(
+                            text = "🎉 $winnerName 🎉",
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(y = offset.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Congratulations! You conquered Truth or Dare 😄")
+                    }
+                },
+                confirmButton = {
+                    Button(onClick = {
+                        showWinnerDialog = false
+//                            onGameEnd()
+                        viewmodel.resetScores()
+                    }) {
+                        Text("Play Again 🔄")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        showWinnerDialog = false
+                        onGameEnd()
+                    }) {
+                        Text("Exit 🏠")
+                    }
+                }
+            )
         }
     }
 }

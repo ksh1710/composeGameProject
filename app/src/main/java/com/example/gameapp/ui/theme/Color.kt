@@ -14,3 +14,7 @@ val Pink40 = Color(0xFF7D5260)
 val bottomBarLight = Color(0xFFC4DA93)
 val bottomBarDark = Color(0xFF689300)
 val lightGray = Color(0xFFC4C4C4)
+
+
+val SplashLight = Color(0xFFfcfcfc)
+val SplashDark = Color(0xFFe7e7e7)
